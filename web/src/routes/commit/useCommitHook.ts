@@ -16,14 +16,21 @@ export const useCommit = () => {
 
   const commitUrl = query.get('commitUrl');
 
+  /**
+   * this will fetch commit from github using axios and
+   * fetch readme
+   */
   const getCommit = useCallback(async () => {
     try {
       const commitRes = await axios.get(commitUrl ?? '');
 
+      // get only the latest commit
       const recentCommit = commitRes.data[0];
 
+      // get the author name
       const author = commitUrl?.split('/')[4];
 
+      // get the repository name
       const repoName = commitUrl?.split('/')[5];
 
       const fullName = `${author}/${repoName}`;
@@ -50,10 +57,12 @@ export const useCommit = () => {
     await getCommit();
   }, [getCommit]);
 
+  // this will handle back button when click
   const handleBack = () => {
     navigate('/');
   };
 
+  // handlescommit when user is component did mount
   useEffect(() => {
     handleCommit();
   }, [handleCommit]);

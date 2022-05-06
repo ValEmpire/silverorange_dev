@@ -1,11 +1,7 @@
-import { Box, Typography } from '@mui/material';
+import ReposRoute from '../routes/repos';
 
 function ReposPage() {
-  return (
-    <Box>
-      <Typography variant="h4">Git Repos</Typography>
-    </Box>
-  );
+  return <ReposRoute />;
 }
 
 export default ReposPage;

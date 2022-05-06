@@ -15,11 +15,11 @@ const getUnforkRepos = async (_: Request, res: Response) => {
 
     const allRepos = response.data;
 
-    // get only forked repos
-    const allForkedRepos = allRepos.filter((repo: Repo) => repo.fork);
+    // get only unforked repos
+    const allUnForkedRepos = allRepos.filter((repo: Repo) => !repo.fork);
 
     return res.status(200).json({
-      repos: allForkedRepos,
+      repos: allUnForkedRepos,
     });
   } catch (err) {
     const msg = (err as Error).message;

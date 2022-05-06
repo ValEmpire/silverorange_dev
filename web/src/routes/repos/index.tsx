@@ -2,7 +2,7 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import { useRepos } from './useReposHook';
 
 function ReposRoute() {
-  const [repos, languages] = useRepos();
+  const [repos, languages, handleFilter] = useRepos();
 
   return (
     <Grid container={true}>
@@ -11,10 +11,20 @@ function ReposRoute() {
           <Typography variant="h4">Silver Orange Unfork Repos</Typography>
         </Box>
 
-        <Typography variant="h6">Filter</Typography>
-        {languages.map((language) => (
-          <Button key={language}>{language}</Button>
-        ))}
+        <Box display={'flex'}>
+          <Typography variant="h6">Filter:</Typography>
+          {languages.map((language) => (
+            <Box key={language} ml={1} mr={1}>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={() => handleFilter(language)}
+              >
+                {language}
+              </Button>
+            </Box>
+          ))}
+        </Box>
 
         {repos.map((repo) => (
           <Box key={repo.name} p={2}>

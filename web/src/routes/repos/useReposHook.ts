@@ -5,6 +5,8 @@ import { axios } from '../../axios';
 export const useRepos = () => {
   const [repos, setRepos] = useState<Repo[]>([]);
 
+  const [origRepos, setOrigRepos] = useState<Repo[]>([]);
+
   const [languages, setLanguages] = useState<string[]>([]);
 
   const getRepos = async () => {
@@ -44,6 +46,8 @@ export const useRepos = () => {
 
       setRepos(resRepos);
 
+      setOrigRepos(resRepos);
+
       const allReposLanguages = getAllLanguages(resRepos);
 
       setLanguages(allReposLanguages);
@@ -52,9 +56,17 @@ export const useRepos = () => {
     }
   }, []);
 
+  const handleFilter = (filter: string) => {
+    const filterArr: Repo[] = [...origRepos];
+
+    const filteredRepo = filterArr.filter((repo) => repo.language === filter);
+
+    setRepos(filteredRepo);
+  };
+
   useEffect(() => {
     handleRepos();
   }, [handleRepos]);
 
-  return [repos, languages] as const;
+  return [repos, languages, handleFilter] as const;
 };

@@ -1,3 +1,4 @@
+import { Repo } from './../models/Repo';
 import { Request, Response } from 'express';
 import axios from 'axios';
 
@@ -9,12 +10,16 @@ const getUnforkRepos = async (_: Request, res: Response) => {
 
     const githubSrcUrl = 'https://api.github.com/users/silverorange/repos';
 
+    // fetch all repos
     const response = await axios.get(githubSrcUrl);
 
-    const repos = response.data;
+    const allRepos = response.data;
+
+    // get only forked repos
+    const allForkedRepos = allRepos.filter((repo: Repo) => repo.fork);
 
     return res.status(200).json({
-      repos,
+      repos: allForkedRepos,
     });
   } catch (err) {
     const msg = (err as Error).message;

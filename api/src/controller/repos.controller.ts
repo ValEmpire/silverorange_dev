@@ -18,6 +18,8 @@ const getUnforkRepos = async (_: Request, res: Response) => {
     // get only unforked repos
     const allUnForkedRepos = allRepos.filter((repo: Repo) => !repo.fork);
 
+    res.setHeader('Content-Type', 'application/json');
+
     return res.status(200).json({
       repos: allUnForkedRepos,
     });

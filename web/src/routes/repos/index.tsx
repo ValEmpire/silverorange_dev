@@ -27,10 +27,13 @@ function ReposRoute() {
           ))}
         </Box>
 
+        {/* Map all repos */}
         {repos.map((repo) => (
           <Box key={repo.name} p={2}>
             <Box display="flex">
               <Typography variant="h6">Repository Name:</Typography>
+
+              {/* get replace /sha with '' to prevent 404 error*/}
               <Link
                 to={`commit/?commitUrl=${repo.commits_url.replace(
                   '{/sha}',

@@ -9,6 +9,10 @@ export const useRepos = () => {
 
   const [languages, setLanguages] = useState<string[]>([]);
 
+  /**
+   *
+   * @returns return repos from axios get from github | error if found
+   */
   const getRepos = async () => {
     try {
       const res = await axios.get('repos');
@@ -21,9 +25,15 @@ export const useRepos = () => {
     }
   };
 
+  /**
+   *
+   * @param repositories Repo
+   * @returns array of strings
+   */
   const getAllLanguages = (repositories: Repo[]): string[] => {
     const res: string[] = [];
 
+    // iterate all repositiries and get all language
     for (const repository of repositories) {
       const repoLanguage = repository.language;
 
@@ -35,17 +45,23 @@ export const useRepos = () => {
     return res;
   };
 
+  /**
+   * this will handle all repos hooks
+   */
   const handleRepos = useCallback(async () => {
     try {
       const resRepos = await getRepos();
 
+      // this will sort repos to reverse chronological
       resRepos.sort(
         (a: Repo, b: Repo) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
 
+      // create two repos
       setRepos(resRepos);
 
+      // this will make sure that we will not modify repos when filtering
       setOrigRepos(resRepos);
 
       const allReposLanguages = getAllLanguages(resRepos);
@@ -64,6 +80,7 @@ export const useRepos = () => {
     setRepos(filteredRepo);
   };
 
+  // handlerepos when component did mount
   useEffect(() => {
     handleRepos();
   }, [handleRepos]);

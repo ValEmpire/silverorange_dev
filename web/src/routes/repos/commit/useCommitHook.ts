@@ -1,12 +1,14 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Commit } from './commitModel';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const useCommit = () => {
   const [commit, setCommit] = useState<Commit>();
 
   const [readMe, setReadMe] = useState<string>('');
+
+  const navigate = useNavigate();
 
   const { search } = useLocation();
 
@@ -48,9 +50,13 @@ export const useCommit = () => {
     await getCommit();
   }, [getCommit]);
 
+  const handleBack = () => {
+    navigate('/');
+  };
+
   useEffect(() => {
     handleCommit();
   }, [handleCommit]);
 
-  return [commit, readMe] as const;
+  return [commit, readMe, handleBack] as const;
 };

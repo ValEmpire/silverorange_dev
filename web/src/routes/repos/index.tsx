@@ -4,6 +4,8 @@ import { useRepos } from './useReposHook';
 function ReposRoute() {
   const [repos, languages, handleFilter] = useRepos();
 
+  console.log(repos);
+
   return (
     <Grid container={true}>
       <Grid item={true} md={12}>

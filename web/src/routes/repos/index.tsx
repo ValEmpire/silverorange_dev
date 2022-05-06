@@ -1,5 +1,6 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { useRepos } from './useReposHook';
+import { Link } from 'react-router-dom';
 
 function ReposRoute() {
   const [repos, languages, handleFilter] = useRepos();
@@ -32,7 +33,14 @@ function ReposRoute() {
           <Box key={repo.name} p={2}>
             <Box display="flex">
               <Typography variant="h6">Repository Name:</Typography>
-              <Typography variant="h6">{repo.name}</Typography>
+              <Link
+                to={`commit/?commitUrl=${repo.commits_url.replace(
+                  '{/sha}',
+                  ''
+                )}`}
+              >
+                {repo.name}
+              </Link>
             </Box>
             <Box display="flex">
               <Typography>Description:</Typography>

@@ -8,7 +8,7 @@ export function App() {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/:id" element={<CommitPage />} />
+        <Route path="/commit" element={<CommitPage />} />
       </Routes>
     </Router>
   );

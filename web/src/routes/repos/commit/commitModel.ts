@@ -1,5 +1,5 @@
 export interface Commit {
-  commit_date: string;
+  commitDate: string;
   author: string;
   message: string;
 }

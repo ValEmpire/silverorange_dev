@@ -1,4 +1,4 @@
-import CommitRoute from '../routes/repos/commit';
+import CommitRoute from '../routes/commit';
 
 function CommitPage() {
   return <CommitRoute />;

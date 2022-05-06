@@ -5,6 +5,8 @@ import { axios } from '../../axios';
 export const useRepos = () => {
   const [repos, setRepos] = useState<Repo[]>([]);
 
+  const [languages, setLanguages] = useState<string[]>([]);
+
   const getRepos = async () => {
     try {
       const res = await axios.get('repos');
@@ -17,6 +19,20 @@ export const useRepos = () => {
     }
   };
 
+  const getAllLanguages = (repositories: Repo[]): string[] => {
+    const res: string[] = [];
+
+    for (const repository of repositories) {
+      const repoLanguage = repository.language;
+
+      if (!res.includes(repoLanguage)) {
+        res.push(repoLanguage);
+      }
+    }
+
+    return res;
+  };
+
   const handleRepos = useCallback(async () => {
     try {
       const resRepos = await getRepos();
@@ -27,6 +43,10 @@ export const useRepos = () => {
       );
 
       setRepos(resRepos);
+
+      const allReposLanguages = getAllLanguages(resRepos);
+
+      setLanguages(allReposLanguages);
     } catch (err) {
       console.log(err);
     }
@@ -36,5 +56,5 @@ export const useRepos = () => {
     handleRepos();
   }, [handleRepos]);
 
-  return [repos];
+  return [repos, languages] as const;
 };
